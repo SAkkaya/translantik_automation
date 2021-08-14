@@ -1,9 +1,7 @@
-@TRANS-545
+
 Feature: As a user, I should be able to log in
 
 	#*_1-All users can log in by using valid credentials (We have 3 types of user such as sales manager, store manager, truck driver)._*
-
-	@TRANS-544
 
 	Scenario Outline: Login with valid credentials for driver, store manager, sales manager "<userType>" with "<submitType>"
 		
@@ -52,7 +50,7 @@ Feature: As a user, I should be able to log in
 			| salesmanager101 |             |
 			|                 | UserUser123 |
 
-      Scenario Outline: Menu Options Driver
+      Scenario Outline: Navigating to Dashboard Menus
         Given the user logged in as "<userType>"
         Then "<userType>" should lands on the "<Page>" page after successful login
 
