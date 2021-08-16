@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 
         plugin = {"html:target/failed-html-report"}, // for report
         features = "@target/rerun.txt", // find only the failed feature file
-        glue = "com/vytrack/step_definitions" // find the step defs
+        glue = "com/translantik/step_definitions" // find the step defs
 
 )
 

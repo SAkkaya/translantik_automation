@@ -1,7 +1,9 @@
 package com.translantik.pages;
 
 import com.translantik.utilities.BrowserUtils;
+import com.translantik.utilities.ConfigurationReader;
 import com.translantik.utilities.Driver;
+import io.cucumber.java.en.Given;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -32,42 +34,55 @@ public class LoginPage {
     public WebElement loginName;
 
     public void login(String userNameStr, String passwordStr) {
-            userName.sendKeys(userNameStr);
-            password.sendKeys(passwordStr);
-            submit.click();
 
-            if(userNameStr.equals("")){
-                BrowserUtils.waitForVisibility(userName, 10);
-                userName.sendKeys(userNameStr);
-                submit.click();
-                emptyMessage = Driver.get().findElement(By.name("_username")).getAttribute("validationMessage");
+        userName.sendKeys(userNameStr);
+        BrowserUtils.waitForVisibility(password, 2);
+        password.sendKeys(passwordStr);
+        submit.click();
+
+        if (userName.getText().isEmpty() && password.getText().isEmpty()){
+            String  message1=password.getAttribute("validationMessage");
+            String  message2=userName.getAttribute("validationMessage");
+            if (message1.isEmpty()){
+                emptyMessage=message2;
+            }else{
+                emptyMessage=message1;
             }
 
-            if(passwordStr.equals("")){
-                BrowserUtils.waitForVisibility(password, 10);
-                password.sendKeys(passwordStr);
-                submit.click();
-            emptyMessage = Driver.get().findElement(By.name("_password")).getAttribute("validationMessage");
-
         }
-
-
 
     }
 
     public void login(String userNameStr, String passwordStr, String submitType) {
 
         if(submitType.equals("submitButton")){
+            BrowserUtils.waitForVisibility(userName, 10);
             userName.sendKeys(userNameStr);
+            BrowserUtils.waitForVisibility(password, 10);
             password.sendKeys(passwordStr);
             submit.click();
         }else{
+            BrowserUtils.waitForVisibility(userName, 10);
             userName.sendKeys(userNameStr);
+            BrowserUtils.waitForVisibility(password, 10);
             password.sendKeys(passwordStr+Keys.ENTER);
 
         }
 
     }
+
+
+
+
+
+    public void logout(){
+        new DashboardPage().waitUntilLoaderScreenDisappear();
+        BrowserUtils.waitForClickablility(new DashboardPage().userName, 20);
+        new DashboardPage().userName.click();
+        new DashboardPage().logOutLink.click();
+    }
+
+
 
 
 }

@@ -12,8 +12,8 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com/translantik/step_definitions",
         dryRun = false,
-        tags = "@TRANS-555"
-//      tags = "@wip and not @logout"
+        tags = "@TRANS-552"
+        //      tags = "@wip and not @logout"
 )
 
 

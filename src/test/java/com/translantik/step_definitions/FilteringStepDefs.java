@@ -16,27 +16,7 @@ import java.util.List;
 
 public class FilteringStepDefs {
 
-    @Given("the user logged in as {string}")
-    public void the_user_logged_in_as(String userType) {
-        switch (userType) {
-            case "driver":
-                BrowserUtils.waitFor(2);
-                new LoginPage().login(ConfigurationReader.get("driver_username"), ConfigurationReader.get("driver_password"));
-                break;
-            case "sales manager":
-                BrowserUtils.waitFor(2);
-                new LoginPage().login(ConfigurationReader.get("sales_manager_username"), ConfigurationReader.get("sales_manager_password"));
-                break;
-            case "store manager":
-                BrowserUtils.waitFor(2);
-                new LoginPage().login(ConfigurationReader.get("store_manager_username"), ConfigurationReader.get("store_manager_password"));
-                break;
-
-            default:
-                System.out.println("invalid user");
-        }
-
-    }
+ 
 
     @When("the user navigate to {string}{string}")
     public void the_user_navigate_to(String tab, String module) {

@@ -21,22 +21,10 @@ public class LoginStepDefs {
     }
 
 
-    @Then("the user should be able to login") // verification
-    public void the_user_should_be_able_to_login()  {
-        BrowserUtils.waitFor(3);
-        String actualTitle = Driver.get().getTitle();
-        Assert.assertEquals("Dashboard", actualTitle);
-
-    }
-
-
     @Then("the user should see the title contains {string}")
     public void the_title_contains(String expectedTitle) {
-        System.out.println("expectedTitle = " + expectedTitle); //expectedTitle = Dashboard ==> this side will be dynamic
         BrowserUtils.waitFor(2);
-        System.out.println("actual Title="+ Driver.get().getTitle());
         Assert.assertTrue(Driver.get().getTitle().contains(expectedTitle));
-
     }
 
     @When("the user logged in as {string} with {string}")
@@ -63,38 +51,63 @@ public class LoginStepDefs {
 
     @When("the user logged in as {string} and {string}")
     public void the_user_logged_in_as_and(String username, String password) {
+        BrowserUtils.waitFor(10);
        new LoginPage().login(username, password);
     }
 
     @Then("the user should see the message {string}")
     public void the_user_should_see_the_message(String expectedTextMessage) {
 
-        if(!new LoginPage().userName.getText().isEmpty() && !new LoginPage().password.getText().isEmpty()){
-            Assert.assertEquals(expectedTextMessage, new LoginPage().invalidLoginMessage.getText());
+        if((expectedTextMessage.equals("Please fill in this field.")) || (expectedTextMessage.equals("Please fill out this field.")) ){
+            BrowserUtils.waitForPageToLoad(10);
+
+            Assert.assertEquals(expectedTextMessage,  LoginPage.emptyMessage);
         }else {
-            Assert.assertEquals(expectedTextMessage, LoginPage.emptyMessage);
+            BrowserUtils.waitFor(10);
+            Assert.assertEquals(expectedTextMessage, new LoginPage().invalidLoginMessage.getText());
         }
 
 
     }
 
 
-    @Then("{string} should lands on the {string} page after successful login")
-    public void should_lands_on_the_page_after_successful_login(String userType, String expectedPage) {
+
+    @When("the user logged in as {string}")
+    public void the_user_logged_in_as(String userType) {
 
         if(userType.equals("driver")){
-            Assert.assertEquals(expectedPage,new DashboardPage().pageSubTitle.getText());
-        }else if(userType.equals("sales manager")){
-            Assert.assertEquals(expectedPage,new DashboardPage().pageSubTitle.getText());
-        }else if(userType.equals("store manager")) {
-            Assert.assertEquals(expectedPage, new DashboardPage().pageSubTitle.getText());
+            new LoginPage().userName.sendKeys(ConfigurationReader.get("driver_username"));
+            new LoginPage().password.sendKeys(ConfigurationReader.get("driver_password"));
         }
+        if(userType.equals("sales manager")) {
+            new LoginPage().userName.sendKeys(ConfigurationReader.get("sales_manager_username"));
+            new LoginPage().password.sendKeys(ConfigurationReader.get("sales_manager_password"));
+        }
+        if(userType.equals("store manager")) {
+            new LoginPage().userName.sendKeys(ConfigurationReader.get("store_manager_username"));
+            new LoginPage().password.sendKeys(ConfigurationReader.get("store_manager_password"));
+        }
+
+        new LoginPage().submit.click();
 
     }
 
 
 
-       
+    @Then("the user should lands on the {string} page")
+    public void the_user_should_lands_on_the_page(String expectedSubtitle) {
+
+
+        System.out.println("expectedSubtitle = " + new DashboardPage().pageSubTitle.getText());
+     Assert.assertEquals(expectedSubtitle, new DashboardPage().pageSubTitle.getText());
+
+    }
+
+
+
+
+
+
 }
 
 

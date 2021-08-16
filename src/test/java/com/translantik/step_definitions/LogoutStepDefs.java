@@ -34,10 +34,7 @@ public class LogoutStepDefs {
 
     @When("the user click on Logout button")
     public void the_user_click_on_Logout_button() {
-        new DashboardPage().waitUntilLoaderScreenDisappear();
-        BrowserUtils.waitForClickablility(new DashboardPage().userName, 20);
-        new DashboardPage().userName.click();
-        new DashboardPage().logOutLink.click();
+      new LoginPage().logout();
     }
 
     @Then("the user should be able to see the Login Page")
@@ -54,9 +51,6 @@ public class LogoutStepDefs {
     public void the_user_click_on_goBack_arrow() {
         Driver.get().navigate().back();
     }
-
-
-
 
 
 }

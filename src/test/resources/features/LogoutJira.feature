@@ -1,5 +1,5 @@
-@TRANS-556 @smoke
-Feature: As a user, I should be able to log out
+@TRANS-556
+Feature: 
 
 	#{color:#00875a}*User Story :* {color}
 	#
@@ -56,6 +56,10 @@ Feature: As a user, I should be able to log out
 		    When the user navigates to "<tab>" "<module>"
 		    And the user click on user icon
 		    Then the user should see the Logout Button
+		    When the user click on Logout button
+		    Then the user should be able to see the Login Page
+		    When the user click on goBack arrow
+		    Then the user should be able to see the Login Page
 		
 		    Examples:
 		      | userType      | tab                | module                |
